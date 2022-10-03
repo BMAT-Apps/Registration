@@ -1,0 +1,4 @@
+{
+	"python_requirements":"requirements.txt",
+	"docker":{"docker":"colinvdb/bmat-ants","tag":null}
+}
