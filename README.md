@@ -38,4 +38,6 @@ The transformation tab is used to perform a transformation of an image into anot
 
 * "Transformation" button: launch the transformation script based on all information given by the user.
 
+**A typical transformation takes about 2 minutes**
+
 ![Transformation Tab](/Readme_pictures/transformation.png)
