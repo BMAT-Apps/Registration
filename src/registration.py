@@ -445,10 +445,11 @@ class RegistrationTab(QWidget):
                 new_path.append(f'ses-{ses}')
             else:
                 new_path.append(p)
-        path_name = '/'
-        for p in new_path:
-            path_name = path_name+'/'+p
-        return pjoin(path_name)
+        return os.sep.join(new_path)
+        # path_name = '/'
+        # for p in new_path:
+        #     path_name = path_name+'/'+p
+        # return pjoin(path_name)
 
 
 
@@ -743,10 +744,11 @@ class TransformationTab(QWidget):
                 new_path.append(f'ses-{ses}')
             else:
                 new_path.append(p)
-        path_name = '/'
-        for p in new_path:
-            path_name = path_name+'/'+p
-        return pjoin(path_name)
+        return os.sep.join(new_path)
+        # path_name = []
+        # for p in new_path:
+        #     path_name = path_name+'/'+p
+        # return pjoin(path_name)
 
 
 
