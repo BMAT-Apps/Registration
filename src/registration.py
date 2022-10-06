@@ -447,8 +447,8 @@ class RegistrationTab(QWidget):
                 new_path.append(p)
         path_name = '/'
         for p in new_path:
-            path_name = pjoin(path_name,p)
-        return path_name
+            path_name = path_name+'/'+p
+        return pjoin(path_name)
 
 
 
@@ -745,8 +745,8 @@ class TransformationTab(QWidget):
                 new_path.append(p)
         path_name = '/'
         for p in new_path:
-            path_name = pjoin(path_name,p)
-        return path_name
+            path_name = path_name+'/'+p
+        return pjoin(path_name)
 
 
 
