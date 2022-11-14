@@ -374,11 +374,17 @@ class RegistrationTab(QWidget):
 
         # find name reg
         if self.name_reg == "":
-            reg = self.ref_sequence.split('_')[-1]
-            if self.ses_to_register == self.ref_ses:
-                self.name_reg = f'reg-{reg}'
+            ref_sequence_details = self.ref_sequence.split('_')
+            ref_sequence_details_bool = ['reg-' in e for e in ref_sequence_details]
+            if True in ref_sequence_details_bool:
+                reg_name_index = ref_sequence_details_bool.index(True)
+                self.name_reg = ref_sequence_details[reg_name_index]
             else:
-                self.name_reg = f'reg-{reg}{self.ref_ses}'
+                reg = self.ref_sequence.split('_')[-1]
+                if self.ses_to_register == self.ref_ses:
+                    self.name_reg = f'reg-{reg}'
+                else:
+                    self.name_reg = f'reg-{reg}{self.ref_ses}'
 
         self.registration_script()
 
@@ -944,7 +950,6 @@ class TransformationWorker(QObject):
         self.reg = reg
         self.subjects_and_sessions = subjects_and_sessions
         self.same_ses = same_ses
-        self.client = docker.from_env()
 
 
     def run(self):
