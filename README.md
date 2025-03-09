@@ -1,40 +1,65 @@
-# registration
+# Registration
 
-This pipeline allows the user to register a certain image into the space of another image. For that BMAT uses antsRegistrationSynQuick from ANTs registration tool ([ANTs registration](http://stnava.github.io/ANTs/)). This allows to quickly perform a rigid registration from one image to another. This registration will compute the registered image and the transformation matrix that have been used. This transformation matrix can also be used to register another images from the initial space to the reference space.
+This pipeline allows to compute an intra-subject rigid registration and to apply the same transformation to other images or labeled segmentation file using ANTs ([ANTs registration](http://stnava.github.io/ANTs/)). 
+
+## Requirements
+
+**ANTs**
+Either ANTs installed locally on the user's computer
+
+Or using the docker antx/ants
+
+You can choose which one to run by switching the option in the Registration.json file
+
+## How to cite
+
+1. Avants B, Tustison N, Song G. Advanced normalization tools (ANTS). Insight J. 2008 Nov 30;1–35. 
 
 ## Utilization
 
 When launching this pipeline, the window contains two tabs; one for the registration and one for the transformation (cf. figures below). The registration tab is used to perform a registration of two images from a same subject and contain the following features:
 
-* "Select image to register" button: opens a "file navigator" window for the user to navigate in his dataset and select the image sequence that he wants to register. 
+* "Quick registration" checkbox: checkbox to compute the registration with antsRegistrationSyNQuick.sh or antsRegistrationSyN.sh (default: Quick)
 
-* "Select reference image" button: opens a "file navigator" window for the user to navigate in his dataset and select the reference image sequence on which he wants to perform the registration. 
+* "Select image to register": opens a File explorer for the user to navigate in his dataset and select the image sequence that he wants to register. 
+
+* "Select reference image": opens a File explorer for the user to navigate in his dataset and select the reference image sequence on which he wants to perform the registration. 
 
 * "Select subjects" input: allows the user to script the selected registration (sequence to register, reference sequence) for other subjects of the dataset. By default (when this field is empty), the registration will only be done for the subject associated to the file selected before. By adding a list BIDS ID (without "sub-") separated by a comma, this registration process can be scripted to other subjects. Possible values are: single BIDS ID (e.g. "001,002,006,013"), multiple folowing BIDS ID (e.g. "001-005" is the same as '001,002,003,004,005"), or all subjects ("all").
 
 * "Select sessions" input: allows the user to script the selected registration (sequence to register, reference sequence) for other sessions of subjects of the dataset. By default (when this field is empty), the registration will only be done for the subject and session assocuated to the file selected before. By adding a list session ID (without "ses-") separated by a comma, this registration process can be scripted to other sessions. Possible values are: single session ID (e.g. "01,02,06,13"), multiple folowing session ID (e.g. "01-05" is the same as '01,02,03,04,05"), or all sessions ("all").
 
-* "Name of registration" input: allows the user to name the registration. The image registered will be saved in a specific folder (named with this input) in the *registrations* folder in the *derivatives* folder. By default the name of registration is the name of the modality of the reference image corresponding to the name of the space in which the image has been registered. We advice to keep this convention. 
+* "derivative name": specify the derivatime name to save the output of the pipeline (default: registrations/reg-{space of the ref image})
+
+* "registration name": specify the registration name tag to add to the ouput image (default: reg-{space of ref image})
 
 * "Apply same transformation ?" checkbox: This allows the user to directly apply the same transformation as the registration to another sequence (this can also be done in the "Transformation" tab. Checking this box will open a "file navigator" to allow the user to select one or more images to apply the same transformation (the image should be in the same space as the image to register)
 
 * "Registration" button: launch the registration script based on all information given by the user.
 
-**A typical registration takes about 3 minutes**
+**A typical registration takes about 3 minutes (Quick) or 10 minutes (with long)**
 
 ![Registration Tab](/Readme_pictures/registration.png)
 
 The transformation tab is used to perform a transformation of an image into another image space based on the transformation matrix of a previous registration. The image to apply the same transformation should be in the same space the image to register from the previous registration. This transformation tab contains the folowing features:
 
-* "Select image to register" button: opens a "file navigator" window for the user to navigate in his dataset and select the image sequence that he wants to register. 
+* "Select image to register": opens File explorer for the user to navigate in his dataset and select the image sequence that he wants to register. 
 
-* "Select reference image" button: opens a "file navigator" window for the user to navigate in his dataset and select the reference image sequence from the previous registration. 
+* "Select reference image": opens file explorer for the user to navigate in his dataset and select the reference image sequence from the previous registration. 
 
-* "Select trasnformation matrix" button: opens a "file navigator" window for the user to navigate in his dataset and select the transformation matrix that will be used to perform the registration. 
+* "Select trasnformation matrix": opens File explorer for the user to navigate in his dataset and select the transformation matrix that will be used to perform the registration. 
+
+* Label Transformation: option to use when apply the transformation matrix to a labeled segmentation file. Use GenericLabel option to keep the label numbers for the output file
+
+* Use invers Transform: option to apply inverse transformation matrix to the input image 
 
 * "Select subjects" input: allows the user to script the selected registration (sequence to register, reference sequence) for other subjects of the dataset. By default (when this field is empty), the registration will only be done for the subject associated to the file selected before. By adding a list BIDS ID (without "sub-") separated by a comma, this registration process can be scripted to other subjects. Possible values are: single BIDS ID (e.g. "001,002,006,013"), multiple folowing BIDS ID (e.g. "001-005" is the same as '001,002,003,004,005"), or all subjects ("all").
 
 * "Select sessions" input: allows the user to script the selected registration (sequence to register, reference sequence) for other sessions of subjects of the dataset. By default (when this field is empty), the registration will only be done for the subject and session associated to the file selected before. By adding a list session ID (without "ses-") separated by a comma, this registration process can be scripted to other sessions. Possible values are: single session ID (e.g. "01,02,06,13"), multiple folowing session ID (e.g. "01-05" is the same as '01,02,03,04,05"), or all sessions ("all").
+
+* "derivative name": specify the derivatime name to save the output of the pipeline (default: registrations/reg-{space of the ref image})
+
+* "registration name": specify the registration name tag to add to the ouput image (default: reg-{space of ref image})
 
 * "Transformation" button: launch the transformation script based on all information given by the user.
 
