@@ -66,3 +66,12 @@ The transformation tab is used to perform a transformation of an image into anot
 **A typical transformation takes about 2 minutes**
 
 ![Transformation Tab](/Readme_pictures/transformation.png)
+
+## Change pipeline option
+
+In the SAMSEG.json file, the user can choose some option to run SAMEG:
+
+* "use_docker": choose to run the pipeline locally using the docker image (true) or locally installed FreeSurfer (default: false)
+
+* "sss_slurm": precise the config file to run the pipeline on the SSS server (specific to UCLouvain members). If this tag does not exists (by default: "sss_slurm_no"), it will run the pipeline locally. To use this pipeline on remote server, change the name "sss_slurm_no" to "sss_slurm", and adapt the config file "SAMSEG_sss.json" for your specific slurm need. This works with a correct "server_info.json" config file in the BMAT home directory.
+
